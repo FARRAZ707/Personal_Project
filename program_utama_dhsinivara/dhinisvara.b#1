@@ -1404,76 +1404,6 @@ Source: http://www.osram.convergy.de/ ... lb_r99a.pdf</description>
 </package3d>
 </packages3d>
 </library>
-<library name="ESP32-C3_SUPERMINI_TH">
-<packages>
-<package name="MODULE_ESP32-C3_SUPERMINI_TH">
-<text x="-8.89" y="13.0175" size="1.27" layer="25">&gt;NAME</text>
-<text x="-8.89" y="-13.0175" size="1.27" layer="27">&gt;VALUE</text>
-<wire x1="9" y1="-11.35" x2="-9" y2="-11.35" width="0.127" layer="51"/>
-<wire x1="9" y1="-11.35" x2="9" y2="11.35" width="0.127" layer="51"/>
-<wire x1="9" y1="11.35" x2="4.5" y2="11.35" width="0.127" layer="51"/>
-<wire x1="-9" y1="-11.35" x2="-9" y2="11.35" width="0.127" layer="51"/>
-<wire x1="4.5" y1="12.65" x2="-4.5" y2="12.65" width="0.127" layer="51"/>
-<wire x1="4.5" y1="12.65" x2="4.5" y2="11.35" width="0.127" layer="51"/>
-<wire x1="-4.5" y1="12.65" x2="-4.5" y2="11.35" width="0.127" layer="51"/>
-<wire x1="-4.5" y1="11.35" x2="-9" y2="11.35" width="0.127" layer="51"/>
-<wire x1="9" y1="-11.35" x2="-9" y2="-11.35" width="0.127" layer="21"/>
-<wire x1="9" y1="-11.35" x2="9" y2="11.35" width="0.127" layer="21"/>
-<wire x1="9" y1="11.35" x2="4.5" y2="11.35" width="0.127" layer="21"/>
-<wire x1="-9" y1="-11.35" x2="-9" y2="11.35" width="0.127" layer="21"/>
-<wire x1="4.5" y1="12.65" x2="-4.5" y2="12.65" width="0.127" layer="21"/>
-<wire x1="4.5" y1="12.65" x2="4.5" y2="11.35" width="0.127" layer="21"/>
-<wire x1="-4.5" y1="12.65" x2="-4.5" y2="11.35" width="0.127" layer="21"/>
-<wire x1="-4.5" y1="11.35" x2="-9" y2="11.35" width="0.127" layer="21"/>
-<wire x1="-9.25" y1="12.9" x2="9.25" y2="12.9" width="0.05" layer="39"/>
-<wire x1="9.25" y1="12.9" x2="9.25" y2="-11.6" width="0.05" layer="39"/>
-<wire x1="9.25" y1="-11.6" x2="-9.25" y2="-11.6" width="0.05" layer="39"/>
-<wire x1="-9.25" y1="-11.6" x2="-9.25" y2="12.9" width="0.05" layer="39"/>
-<pad name="5" x="-7.62" y="9.9" drill="0.84"/>
-<pad name="6" x="-7.62" y="7.36" drill="0.84"/>
-<pad name="7" x="-7.62" y="4.82" drill="0.84"/>
-<pad name="8" x="-7.62" y="2.28" drill="0.84"/>
-<pad name="9" x="-7.62" y="-0.26" drill="0.84"/>
-<pad name="10" x="-7.62" y="-2.8" drill="0.84"/>
-<pad name="20" x="-7.62" y="-5.34" drill="0.84"/>
-<pad name="21" x="-7.62" y="-7.88" drill="0.84"/>
-<pad name="0" x="7.62" y="-7.88" drill="0.84"/>
-<pad name="1" x="7.62" y="-5.34" drill="0.84"/>
-<pad name="2" x="7.62" y="-2.8" drill="0.84"/>
-<pad name="3" x="7.62" y="-0.26" drill="0.84"/>
-<pad name="4" x="7.62" y="2.28" drill="0.84"/>
-<pad name="3.3" x="7.62" y="4.82" drill="0.84"/>
-<pad name="G" x="7.62" y="7.36" drill="0.84"/>
-<pad name="5V" x="7.62" y="9.9" drill="0.84"/>
-</package>
-</packages>
-</library>
-<library name="HLK-10M05">
-<packages>
-<package name="CONV_HLK-10M05">
-<wire x1="-23.75" y1="14.25" x2="23.75" y2="14.25" width="0.127" layer="51"/>
-<wire x1="23.75" y1="14.25" x2="23.75" y2="-14.25" width="0.127" layer="51"/>
-<wire x1="23.75" y1="-14.25" x2="-23.75" y2="-14.25" width="0.127" layer="51"/>
-<wire x1="-23.75" y1="-14.25" x2="-23.75" y2="14.25" width="0.127" layer="51"/>
-<wire x1="-23.75" y1="14.25" x2="23.75" y2="14.25" width="0.127" layer="21"/>
-<wire x1="23.75" y1="14.25" x2="23.75" y2="-14.25" width="0.127" layer="21"/>
-<wire x1="23.75" y1="-14.25" x2="-23.75" y2="-14.25" width="0.127" layer="21"/>
-<wire x1="-23.75" y1="-14.25" x2="-23.75" y2="14.25" width="0.127" layer="21"/>
-<wire x1="-24" y1="14.5" x2="-24" y2="-14.5" width="0.05" layer="39"/>
-<wire x1="-24" y1="-14.5" x2="24" y2="-14.5" width="0.05" layer="39"/>
-<wire x1="24" y1="-14.5" x2="24" y2="14.5" width="0.05" layer="39"/>
-<wire x1="24" y1="14.5" x2="-24" y2="14.5" width="0.05" layer="39"/>
-<circle x="-25.37" y="2.5" radius="0.1" width="0.2" layer="21"/>
-<circle x="-25.37" y="2.5" radius="0.1" width="0.2" layer="51"/>
-<text x="-23.6" y="15.06" size="1.27" layer="25">&gt;NAME</text>
-<text x="-23.6" y="-15.06" size="1.27" layer="27" align="top-left">&gt;VALUE</text>
-<pad name="1" x="-21.25" y="3.9" drill="1.3" shape="square"/>
-<pad name="2" x="-21.25" y="-3.9" drill="1.3"/>
-<pad name="3" x="21.25" y="11.3" drill="1.3"/>
-<pad name="4" x="21.25" y="-11.3" drill="1.3"/>
-</package>
-</packages>
-</library>
 </libraries>
 <attributes>
 </attributes>
@@ -1775,41 +1705,8 @@ design rules under a new name.</description>
 <attribute name="SPICEPREFIX" value="R" x="0" y="0" size="1.778" layer="27" display="off"/>
 <attribute name="VALUE" x="-46.99" y="40.64" size="1.27" layer="27"/>
 </element>
-<element name="U1" library="ESP32-C3_SUPERMINI_TH" package="MODULE_ESP32-C3_SUPERMINI_TH" value="ESP32-C3_SUPERMINI_TH" x="-57.15" y="13.97" smashed="yes">
-<attribute name="AVAILABILITY" value="Not in stock" x="-57.15" y="13.97" size="1.778" layer="27" display="off"/>
-<attribute name="CHECK_PRICES" value="https://www.snapeda.com/parts/ESP32-C3%20SuperMini_TH/Espressif+Systems/view-part/?ref=eda" x="-57.15" y="13.97" size="1.778" layer="27" display="off"/>
-<attribute name="DESCRIPTION" value="                                                      Super tiny ESP32-C3 board                                              " x="-57.15" y="13.97" size="1.778" layer="27" display="off"/>
-<attribute name="MF" value="Espressif Systems" x="-57.15" y="13.97" size="1.778" layer="27" display="off"/>
-<attribute name="MP" value="ESP32-C3 SuperMini_TH" x="-57.15" y="13.97" size="1.778" layer="27" display="off"/>
-<attribute name="NAME" x="-66.04" y="26.9875" size="1.27" layer="25"/>
-<attribute name="PACKAGE" value="Package " x="-57.15" y="13.97" size="1.778" layer="27" display="off"/>
-<attribute name="PRICE" value="None" x="-57.15" y="13.97" size="1.778" layer="27" display="off"/>
-<attribute name="SNAPEDA_LINK" value="https://www.snapeda.com/parts/ESP32-C3%20SuperMini_TH/Espressif+Systems/view-part/?ref=snap" x="-57.15" y="13.97" size="1.778" layer="27" display="off"/>
-<attribute name="VALUE" x="-66.04" y="0.9525" size="1.27" layer="27"/>
-</element>
-<element name="PS1" library="HLK-10M05" package="CONV_HLK-10M05" value="HLK-10M05" x="-40.64" y="-17.78" smashed="yes">
-<attribute name="AVAILABILITY" value="Not in stock" x="-40.64" y="-17.78" size="1.778" layer="27" display="off"/>
-<attribute name="CHECK_PRICES" value="https://www.snapeda.com/parts/HLK-10M05/Hi-link/view-part/?ref=eda" x="-40.64" y="-17.78" size="1.778" layer="27" display="off"/>
-<attribute name="DESCRIPTION" value="                                                      10W Ultra-Compact Power Module                                              " x="-40.64" y="-17.78" size="1.778" layer="27" display="off"/>
-<attribute name="MF" value="Hi-link" x="-40.64" y="-17.78" size="1.778" layer="27" display="off"/>
-<attribute name="MP" value="HLK-10M05" x="-40.64" y="-17.78" size="1.778" layer="27" display="off"/>
-<attribute name="NAME" x="-64.24" y="-2.72" size="1.27" layer="25"/>
-<attribute name="PACKAGE" value="Package " x="-40.64" y="-17.78" size="1.778" layer="27" display="off"/>
-<attribute name="PRICE" value="None" x="-40.64" y="-17.78" size="1.778" layer="27" display="off"/>
-<attribute name="SNAPEDA_LINK" value="https://www.snapeda.com/parts/HLK-10M05/Hi-link/view-part/?ref=snap" x="-40.64" y="-17.78" size="1.778" layer="27" display="off"/>
-<attribute name="VALUE" x="-64.24" y="-32.84" size="1.27" layer="27" align="top-left"/>
-</element>
 </elements>
 <signals>
-<signal name="5V">
-<contactref element="U1" pad="5V"/>
-</signal>
-<signal name="GND">
-<contactref element="U1" pad="G"/>
-</signal>
-<signal name="3V3">
-<contactref element="U1" pad="3.3"/>
-</signal>
 </signals>
 <mfgpreviewcolors>
 <mfgpreviewcolor name="soldermaskcolor" color="0xC8008000"/>
