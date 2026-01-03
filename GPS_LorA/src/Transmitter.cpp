@@ -4,7 +4,7 @@
 #include <TinyGPSPlus.h>
 #include <ArduinoJson.h>
 #include <map>
-
+//192.168.1.22
 // ==== WiFi Credentials ====
 const char* ssid = "NDtechnogy 4G";
 const char* password = "NDtech1234";
