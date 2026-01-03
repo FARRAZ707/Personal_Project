@@ -1,0 +1,197 @@
+:root {
+    --primary: #f39c12; 
+    --bg: #1e1e2f;
+    --card-bg: #27293d;
+    --text: #ffffff;
+    --success: #2ecc71;
+    --danger: #e74c3c;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 { margin-bottom: 20px; border-bottom: 3px solid var(--primary); padding-bottom: 10px; }
+
+/* --- DASHBOARD CARDS --- */
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    margin-bottom: 30px;
+}
+
+.card {
+    background-color: var(--card-bg);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    text-align: center;
+    border-left: 5px solid var(--primary);
+}
+
+.icon { font-size: 2em; margin-bottom: 10px; color: var(--primary); }
+.title { font-size: 1em; color: #bdc3c7; }
+.value { font-size: 2em; font-weight: bold; }
+.unit { font-size: 0.5em; color: #95a5a6; }
+
+/* --- CHART SECTION --- */
+.charts-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    margin-bottom: 30px;
+}
+
+.chart-wrapper {
+    background-color: var(--card-bg);
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+/* --- HISTORY & TABLE SECTION --- */
+.history-container {
+    width: 100%;
+    max-width: 1200px;
+    background-color: var(--card-bg);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.btn-download {
+    background-color: var(--success);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+}
+.btn-download:hover { background-color: #27ae60; }
+
+/* Table Styling */
+.table-wrapper {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9em;
+}
+
+th, td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #444;
+}
+
+th {
+    background-color: #34364a;
+    position: sticky;
+    top: 0;
+    color: var(--primary);
+}
+
+tr:hover { background-color: #34364a; }
+
+#status {
+    margin-top: 20px;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    background-color: var(--danger);
+}
+
+/* ... (KODE LAMA TETAP SAMA) ... */
+
+/* --- CONTROL PANEL STYLES (NEW) --- */
+.control-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    margin-bottom: 30px;
+}
+
+.control-card {
+    background-color: var(--card-bg);
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.control-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+.control-header i { font-size: 1.5em; color: #bdc3c7; }
+
+/* Switch Slider CSS (Wajib ada untuk tombol geser) */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    margin-top: 10px;
+}
+
+.switch input { opacity: 0; width: 0; height: 0; }
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px; width: 26px;
+    left: 4px; bottom: 4px;
+    background-color: white;
+    transition: .4s;
+}
+
+input:checked + .slider { background-color: var(--primary); }
+input:focus + .slider { box-shadow: 0 0 1px var(--primary); }
+input:checked + .slider:before { transform: translateX(26px); }
+
+/* Rounded sliders */
+.slider.round { border-radius: 34px; }
+.slider.round:before { border-radius: 50%; }
+
+/* Animasi Kipas Muter */
+.spin { animation: spin 1s linear infinite; color: var(--primary) !important; }
+@keyframes spin { 100% { transform: rotate(360deg); } }
