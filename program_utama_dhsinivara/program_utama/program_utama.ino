@@ -4,7 +4,6 @@
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 
-// --- PINOUT (Sesuai Rangkaian Anda) ---
 const int pinRelay1   = 0;
 const int pinRelay2   = 1;
 const int pinDHT      = 2;
@@ -59,7 +58,7 @@ void setup() {
   lcd.setCursor(0, 1);
   lcd.print("  SYSTEM  INITIAL   "); 
   lcd.setCursor(0, 2);
-  lcd.print("   PULL-DOWN MODE   "); 
+  lcd.print("   DHISNIVARA   "); 
   delay(1500);
   lcd.clear();
 }
