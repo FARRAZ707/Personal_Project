@@ -30,7 +30,7 @@ unsigned long lastRateTime = 0;
 unsigned long lastLCDUpdate = 0;
 
 int nowFire = FIRESTOP;
-bool inCalibrationMode = false;
+bool inCalibrationMode = false; // Flag pengunci (Latch)
 uint32_t sensorADC = 0;
 uint32_t potADC = 0;
 
@@ -40,7 +40,9 @@ bool longPressDetected = false;
 
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
-// PROTOTYPES
+// ==========================================
+// FUNCTION PROTOTYPES (Agar tidak error)
+// ==========================================
 void doShotDetection();
 void doCalibration();
 void updateDMD();
@@ -48,6 +50,9 @@ void updateLCD();
 void showOK();
 void resetCounters();
 
+// ==========================================
+// SETUP
+// ==========================================
 void setup() {
   Serial.begin(115200);
   pinMode(RESET_PIN, INPUT_PULLUP);
@@ -58,6 +63,7 @@ void setup() {
   lcd.setCursor(0,0);
   lcd.print("  SYSTEM READY  ");
 
+  // Init DMD timer
   uint8_t cpuClock = ESP.getCpuFreqMHz();
   timer = timerBegin(0, cpuClock, true);
   timerAttachInterrupt(timer, &triggerScan, true);
@@ -71,11 +77,14 @@ void setup() {
   updateLCD();
 }
 
+// ==========================================
+// MAIN LOOP
+// ==========================================
 void loop() {
   unsigned long currentTime = millis();
   bool btnNow = (digitalRead(RESET_PIN) == LOW);
 
-  // --- LOGIKA TOMBOL LATCH ---
+  // --- LOGIKA TOMBOL DENGAN PENGUNCI (LATCH) ---
   if (btnNow && !buttonPressed) {
     buttonPressed = true;
     buttonPressStart = currentTime;
@@ -83,7 +92,7 @@ void loop() {
   }
 
   if (btnNow && buttonPressed && !longPressDetected) {
-    if (currentTime - buttonPressStart >= 2000) {
+    if (currentTime - buttonPressStart >= 2000) { // Tahan 2 detik untuk kunci kalibrasi
       longPressDetected = true;
       inCalibrationMode = true; 
       dmd.clearScreen(true);
@@ -94,8 +103,9 @@ void loop() {
 
   if (!btnNow && buttonPressed) {
     if (!longPressDetected) {
+      // Jika dilepas cepat (Short Press)
       if (inCalibrationMode) {
-        inCalibrationMode = false;
+        inCalibrationMode = false; // Lepas pengunci kalibrasi
         nowFire = FIRESTOP;
         showOK();
       } else {
@@ -111,6 +121,7 @@ void loop() {
   } else {
     doShotDetection();
     
+    // Hitung RoF tiap 1 detik
     if (currentTime - lastRateTime >= 1000) {
       rateOfFirePerMinute = shotCount * 60;
       shotCount = 0;
@@ -120,56 +131,50 @@ void loop() {
     }
   }
 
+  // Throttling LCD agar tidak membebani prosesor
   if (currentTime - lastLCDUpdate >= 250) {
     updateLCD();
     lastLCDUpdate = currentTime;
   }
 }
 
+// ==========================================
+// DEFINISI FUNGSI-FUNGSI
+// ==========================================
+
 void doShotDetection() {
+  // Stabilisasi ADC: Rata-rata 8 sampel untuk mengurangi noise
   long sum = 0;
   for(int i=0; i<8; i++) sum += analogRead(TRIGGER_PIN);
   sensorADC = sum / 8;
+  
   potADC = analogRead(POT_PIN);
 
+  // Logika deteksi peluru (Trigger jika sensor < pot)
   if (sensorADC < potADC && nowFire == FIRESTOP) {
     bulletCount++;
     shotCount++;
     nowFire = FIRESTART;
     updateDMD(); 
   } 
+  // Hysteresis: Sensor harus kembali ke kondisi terang (pot + offset)
   else if (sensorADC > (potADC + 250)) { 
     nowFire = FIRESTOP;
   }
 }
 
-// ==========================================
-// MODE KALIBRASI (CENTER TANPA ITOA)
-// ==========================================
 void doCalibration() {
   static unsigned long lastCalibRefresh = 0;
-  if (millis() - lastCalibRefresh > 200) {
+  if (millis() - lastCalibRefresh > 200) { // Refresh rate kalibrasi 200ms
     sensorADC = analogRead(TRIGGER_PIN);
     potADC = analogRead(POT_PIN);
 
     dmd.clearScreen(true);
     dmd.selectFont(System5x7);
-    
-    // Menggunakan String untuk perhitungan panjang teks
-    String strSensor = String(sensorADC);
-    String strPot     = String(potADC);
-
-    // Hitung posisi tengah: (Total Lebar / 2) - (Jumlah Karakter * Lebar Font / 2)
-    // Menggunakan lebar font standard 5x7 (lebar 6 pixel termasuk spasi)
-    int xS = (32 - (strSensor.length() * 6)) / 2;
-    int xP = (32 - (strPot.length() * 6)) / 2;
-
-    // Pastikan koordinat X tidak negatif
-    if (xS < 0) xS = 0;
-    if (xP < 0) xP = 0;
-
-    dmd.drawString(xS, 0, strSensor.c_str(), strSensor.length(), GRAPHICS_NORMAL);
-    dmd.drawString(xP, 8, strPot.c_str(), strPot.length(), GRAPHICS_NORMAL);
+    String s = String(sensorADC);
+    String p = String(potADC);
+    dmd.drawString(0, 0, s.c_str(), s.length(), GRAPHICS_NORMAL);
+    dmd.drawString(0, 8, p.c_str(), p.length(), GRAPHICS_NORMAL);
     
     lcd.setCursor(0,1);
     lcd.print("S:"); lcd.print(sensorADC); lcd.print(" P:"); lcd.print(potADC); lcd.print("    ");
@@ -211,19 +216,16 @@ void updateLCD() {
 
 void updateDMD() {
   if (inCalibrationMode) return;
-  
   dmd.clearScreen(true);
   dmd.selectFont(System5x7);
   
   String r = String(rateOfFirePerMinute);
   String b = String(bulletCount);
   
+  // Hitung posisi X agar teks di tengah (Center Alignment)
   int x1 = (32 - (r.length() * 6)) / 2;
   int x2 = (32 - (b.length() * 6)) / 2;
   
-  if (x1 < 0) x1 = 0;
-  if (x2 < 0) x2 = 0;
-  
-  dmd.drawString(x1, 0, r.c_str(), r.length(), GRAPHICS_NORMAL);
-  dmd.drawString(x2, 8, b.c_str(), b.length(), GRAPHICS_NORMAL);
+  dmd.drawString(x1 < 0 ? 0 : x1, 0, r.c_str(), r.length(), GRAPHICS_NORMAL);
+  dmd.drawString(x2 < 0 ? 0 : x2, 8, b.c_str(), b.length(), GRAPHICS_NORMAL);
 }
