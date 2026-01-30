@@ -43,10 +43,6 @@ bool lastResetState = HIGH;
 bool needLCDUpdate = false;
 int adcValue = 0;  // Nilai ADC dari potensiometer
 int lastAdcValue = -1;  // Nilai ADC sebelumnya untuk deteksi perubahan
-unsigned long lastAdcSample = 0;
-const unsigned long adcSampleInterval = 50; // ms antara pembacaan ADC
-int adcSmoothed = 0; // nilai ADC setelah filtering (EMA)
-const int adcThreshold = 4; // ambang minimal perubahan untuk dianggap signifikan
 
 // LCD I2C 16x2
 LiquidCrystal_I2C lcd(0x27, 16, 2);
@@ -71,12 +67,6 @@ void setup() {
   Serial.println("Shot Counter Ready! Reset dengan GPIO0");
   lastRateTime = millis();
   lastLCDUpdate = millis();
-
-  // Konfigurasi ADC (ESP32): lebar dan attenuasi
-  analogSetWidth(12); // 12-bit ADC
-  analogSetPinAttenuation(ADC_PIN, ADC_11db); // range sampai ~3.3V
-  // Inisialisasi nilai smoothed
-  adcSmoothed = analogRead(ADC_PIN);
 
   // Init timer untuk DMD / P10
   delay(200);
@@ -128,21 +118,11 @@ void loop() {
   }
   lastResetState = resetState;
 
-  // Baca ADC pada interval tetap dan gunakan filter EMA sederhana
-  unsigned long now = currentTime;
-  if (now - lastAdcSample >= adcSampleInterval) {
-    lastAdcSample = now;
-    int raw = analogRead(ADC_PIN);
-    // Exponential moving average: alpha = 1/8
-    int newSmoothed = (raw + adcSmoothed * 7) / 8;
-    if (abs(newSmoothed - adcSmoothed) >= adcThreshold) {
-      adcSmoothed = newSmoothed;
-      needLCDUpdate = true;
-    } else {
-      adcSmoothed = newSmoothed;
-    }
-    adcValue = raw; // tetap menyimpan nilai mentah jika diperlukan
+  // Baca nilai ADC dari potensiometer
+  adcValue = analogRead(ADC_PIN);
+  if (adcValue != lastAdcValue) {
     lastAdcValue = adcValue;
+    //needLCDUpdate = true;
   }
 
   // Update LCD secara terjadwal (throttled) jika ada perubahan

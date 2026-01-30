@@ -18,17 +18,14 @@ float accelX, accelY, accelZ;
 float magnitude;
 bool vibration_detected = false;
 
-// LED Pin untuk indikator getaran (GPIO 2 - built-in LED pada ESP32)
 const int LED_PIN = 2;
 
 void setup() {
   Serial.begin(115200);
-  delay(1000);  // Tunggu Serial siap
+  delay(1000);  
+
+  Wire.begin(21, 22);  
   
-  // Inisialisasi I2C
-  Wire.begin(21, 22);  // SDA = GPIO21, SCL = GPIO22 (default ESP32)
-  
-  // Inisialisasi MPU6050
   Serial.println("\n\nMenginisialisasi MPU6050...");
   
   if (!mpu.begin()) {
@@ -41,7 +38,6 @@ void setup() {
   
   Serial.println("✅ MPU6050 berhasil terhubung");
   
-  // Konfigurasi sensor
   mpu.setAccelerometerRange(MPU6050_RANGE_8_G);  // Range ±8g
   mpu.setFilterBandwidth(MPU6050_BAND_94_HZ);    // Low Pass Filter
   
