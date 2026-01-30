@@ -7,7 +7,6 @@
 
 #define TRIGGER_PIN 36
 #define RESET_PIN   0     
-#define ADC_PIN     39  // Pin ADC untuk potensiometer
 #define FIRESTOP    0
 #define FIRESTART   1
 #define FIREDURING  2
@@ -41,8 +40,6 @@ const unsigned long lcdUpdateInterval = 100;
 int  nowFire = FIRESTOP;
 bool lastResetState = HIGH;
 bool needLCDUpdate = false;
-int adcValue = 0;  // Nilai ADC dari potensiometer
-int lastAdcValue = -1;  // Nilai ADC sebelumnya untuk deteksi perubahan
 
 // LCD I2C 16x2
 LiquidCrystal_I2C lcd(0x27, 16, 2);
@@ -51,7 +48,6 @@ void setup() {
   Serial.begin(115200);
   pinMode(TRIGGER_PIN, INPUT);
   pinMode(RESET_PIN,  INPUT_PULLUP);
-  pinMode(ADC_PIN, INPUT);  // Inisialisasi pin ADC
 
   Wire.begin(21, 22);
   lcd.init();
@@ -118,13 +114,6 @@ void loop() {
   }
   lastResetState = resetState;
 
-  // Baca nilai ADC dari potensiometer
-  adcValue = analogRead(ADC_PIN);
-  if (adcValue != lastAdcValue) {
-    lastAdcValue = adcValue;
-    //needLCDUpdate = true;
-  }
-
   // Update LCD secara terjadwal (throttled) jika ada perubahan
   if (needLCDUpdate && (currentTime - lastLCDUpdate >= lcdUpdateInterval)) {
     updateLCD();
@@ -168,7 +157,6 @@ void loop() {
       Serial.print(" | RoF: "); Serial.print(rateOfFire);
       Serial.print(" | RPM: "); Serial.print(rateOfFirePerMinute);
       Serial.print(" | Max: "); Serial.println(highestRoFm);
-      Serial.print(" | ADC: "); Serial.println(adcValue);
     }
     nowFire = FIREDURING;
   }
@@ -229,7 +217,7 @@ void updateLCD() {
   lcd.setCursor(0, 0);
   lcd.print("                "); 
   lcd.setCursor(0, 0);
-  lcd.print("ROF:");
+  lcd.print("ROF: ");
   lcd.print(rateOfFirePerMinute);
 
 
@@ -238,8 +226,6 @@ void updateLCD() {
   lcd.setCursor(0, 1);
   lcd.print("BLT: ");
   lcd.print(bulletCount);
-  // lcd.print("ADC:");
-  // lcd.print(adcValue);
 }
 
 void updateDMD() {
